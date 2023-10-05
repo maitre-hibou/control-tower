@@ -7,6 +7,10 @@ else
 	DOCKER_COMPOSE = docker compose
 endif
 
+PHP 		= $(DOCKER_COMPOSE) exec -u www-data app php
+COMPOSER 	= $(PHP) /usr/local/bin/composer
+SF_CONSOLE 	= $(PHP) bin/console
+
 .DEFAULT_GOAL := help
 
 help: 				## Show this message
@@ -36,3 +40,16 @@ up: 				## Start project containers
 	@$(DOCKER_COMPOSE) up -d --force-recreate
 
 .PHONY: build down stop up
+
+##@ Application
+
+cache: 				## Clear Symfony cache
+	@$(SF_CONSOLE) cache:clear ${c}
+
+composer: 			## Execute composer within app container
+	@$(COMPOSER) ${c}
+
+console: 			## Execute Symfony console within app container
+	@$(SF_CONSOLE) ${c}
+
+.PHONY: composer console
