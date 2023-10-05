@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build Docker images
-      uses: docker
+      using: docker
       run: make build
     - name: Run test suites
-      uses: docker
+      using: docker
       run: make tests
     - name: Run QA suites
-      uses: docker
+      using: docker
       run: make qa
