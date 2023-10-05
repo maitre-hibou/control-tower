@@ -1,0 +1,27 @@
+server {
+    server_name ${APP_DOMAIN};
+    listen      80;
+
+    root        /var/www/public;
+
+    client_max_body_size    50m;
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/index.php(/|$) {
+        fastcgi_pass                ${COMPOSE_PROJECT_NAME}-app.docker:9000;
+        fastcgi_split_path_info     ^(.+\.php)(/.*)$;
+        include                     fastcgi_params;
+        fastcgi_param               DOCUMENT_ROOT $realpath_root;
+        fastcgi_param               SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_buffers             16 16k;
+        fastcgi_buffer_size         32k;
+        internal;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+}
