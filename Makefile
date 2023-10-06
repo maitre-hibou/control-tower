@@ -57,7 +57,7 @@ console: 			## Execute Symfony console within app container
 
 ##@ Tests & QA
 
-lint: lint-twig lint-yaml			## Lint yaml & Twig project files
+lint: lint-twig lint-yaml	## Lint yaml & Twig project files
 
 lint-twig:
 	@$(PHP_TEST) bin/console lint:twig templates/
@@ -68,17 +68,14 @@ lint-yaml:
 phpcs:
 	@$(PHP_TEST) vendor/bin/php-cs-fixer fix --config=config/.php-cs-fixer.dist.php --dry-run --diff --verbose --allow-risky=yes --using-cache=no
 
-phpunit: 							## Run project PHPUnit tests suites
+phpunit: 					## Run project PHPUnit tests suites
 	@$(PHP_TEST) bin/phpunit --do-not-cache-result -c config/.phpunit.xml.dist ${c}
 
-psalm: 								## Run Psalm static code analysis
+psalm: 						## Run Psalm static code analysis
 	@$(PHP_TEST) vendor/bin/psalm --no-cache -c config/.psalm.xml.dist ${c}
 
-qa: lint validate-composer phpcs 	## Run project QA tools
+qa: lint phpcs 				## Run project QA tools
 
-tests: phpunit psalm				## Run project tests tools
+tests: phpunit psalm		## Run project tests tools
 
-validate-composer:
-	@$(COMPOSER) validate
-
-.PHONY: lint lint-twig lint-yaml phpcs phpunit psalm tests validate-composer
+.PHONY: lint lint-twig lint-yaml phpcs phpunit psalm tests
