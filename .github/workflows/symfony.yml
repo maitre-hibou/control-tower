@@ -18,12 +18,10 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout
     - name: Build Docker images
-      using: docker
       run: make build
     - name: Run test suites
-      using: docker
       run: make tests
     - name: Run QA suites
-      using: docker
       run: make qa
