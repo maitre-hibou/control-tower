@@ -78,7 +78,4 @@ qa: lint validate-composer phpcs 	## Run project QA tools
 
 tests: phpunit psalm				## Run project tests tools
 
-validate-composer:
-	@$(COMPOSER) validate
-
-.PHONY: lint lint-twig lint-yaml phpcs phpunit psalm tests validate-composer
+.PHONY: lint lint-twig lint-yaml phpcs phpunit psalm tests
